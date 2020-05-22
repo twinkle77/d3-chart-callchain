@@ -5,6 +5,8 @@
 
 > 用于服务与服务之间的调用关系
 
+![image](https://github.com/twinkle77/d3-chart-callchain/blob/master/examples/demo.gif)
+
 ## Author
 
 👤 **twinkle77**
