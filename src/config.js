@@ -11,14 +11,13 @@ export default {
     markerHeight: 8,
     markerWidth: 8
   },
-  // 圆环颜色
-  NodeColor: ['#1BCA69', '#FF3A3A', '#FAB418'],
+  node: {
+    color: ['#1BCA69', '#FF3A3A', '#FAB418'], // 圆环颜色
+    radius: 60, // 节点半径
+    width: 13 // 圆环宽度
+  },
   Client: 'client',
   CollideRadius: 135,
-  // 节点半径
-  NodeRadius: 60,
-  // 圆环宽度
-  RingWidth: 13,
   // 边颜色
   EdgeColor: '#999',
   // area边宽度

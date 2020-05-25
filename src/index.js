@@ -2,7 +2,7 @@ import * as d3 from 'd3'
 import { query, prefix } from '@/util/element'
 import CONFIG from '@/config'
 import { drawSymbol } from '@/draw'
-import transformData from './transform'
+import transformData, { SERVER } from './transform'
 import data from './data'
 
 export default class Callchain {
@@ -22,7 +22,11 @@ export default class Callchain {
 
   defs = null
 
-  data = null
+  nodes = null
+
+  simulation = null
+
+  nodeElements = null
 
   constructor (el = 'callchain') {
     this.container = query(el)
@@ -32,6 +36,7 @@ export default class Callchain {
   setup () {
     this.createElement()
     this.createSymbol()
+    this.setupForce()
   }
 
   createElement () {
@@ -56,17 +61,51 @@ export default class Callchain {
         color: colors[key]
       })
     })
-
-    this.processData(data)
   }
 
   processData (data) {
-    this.data = typeof CONFIG.transform === 'function' ? CONFIG.transform(data) : transformData(data)
-    console.log(this.data)
+    this.nodes = typeof CONFIG.transform === 'function' ? CONFIG.transform(data) : transformData(data)
+  }
+
+  setupForce () {
+    this.simulation = d3.forceSimulation()
+    // this.simulation
+    //   .on('tick', (...args) => { console.log(this.nodes) })
+    //   .on('end', function end (...args) { console.log(args) })
+    // console.log(this.nodes)
+  }
+
+  uninstallForce () {
+    this.simulation.force('X', null)
   }
 
   setOptions () {
+    this.processData(data)
+    this.simulation.nodes(this.nodes)
+    // this.simulation
+    //   .on('tick', (...args) => { console.log(this.nodes) })
+    //   .on('end', function end (...args) { console.log(args) })
+    // console.log(this.nodes)
 
+    this.nodeElements = this.nodesWrapper
+      .selectAll('.node')
+      .data(this.nodes)
+
+    this.nodeElements
+      .enter()
+      .append('g')
+      .attr('class', node => {
+        let className = `${node.type.toLowerCase()} node `
+        if (node.type === SERVER) {
+          className += 'clickable'
+        }
+        return className
+      })
+      .attr('id', node => node.id)
+
+    this.nodeElements
+      .exit()
+      .remove()
   }
 
   destory () {
@@ -74,6 +113,6 @@ export default class Callchain {
   }
 
   render () {
-
+    this.setOptions()
   }
 }

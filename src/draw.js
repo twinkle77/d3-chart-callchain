@@ -1,3 +1,5 @@
+import * as d3 from 'd3'
+
 /**
  * 绘制箭头
  * 一个<marker>就是一个“独立的”图形，有自己的坐标系统
@@ -35,8 +37,18 @@ export function drawAreas () {
 }
 
 // 绘制节点
-export function drawNodes () {
-
+export function drawNodes (selection, { color, radius, width }) {
+  // const colors = d3.scaleOrdinal().range(color)
+  // // 圆形数据生成函数
+  // const arc = d3
+  //   .arc()
+  //   .innerRadius(radius - width)
+  //   .outerRadius(radius)
+  // // 饼图数据生成函数
+  // const pie = d3
+  //   .pie()
+  //   .value(d => d)
+  //   .sort(null)
 }
 
 // 绘制“客户端”节点

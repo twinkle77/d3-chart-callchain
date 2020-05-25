@@ -22,23 +22,7 @@ class Edge {
     this.target = target
   }
 }
-/*
-  构造一个这样的数据结构，下面的所有函数才能跑通
-  [
-    {
-      id: 1,
-      Edges: [],
-      Type: 'client',
-      scaleReq: null
-    },
-    {
-      id: 2,
-      Edges: []
-      Type: 'Server',
-      scaleReq: [成功的占比，失败的占比]
-    }
-  ]
-*/
+
 /**
  * 数据结构转换，转换成适用图的数据结果
  * @param {object} data
@@ -85,7 +69,7 @@ export default function transformData (data) {
     const { id, meta: { parentIds } } = node
 
     parentIds.forEach(pId => {
-      node.setEdges(new Edge(id, pId))
+      node.setEdges(new Edge(pId, id))
     })
   })
 
