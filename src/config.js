@@ -1,10 +1,15 @@
 export default {
+  transform: null, // 数据预处理
   Margin: 20,
   Colors: [],
-  markerColors: {
-    ACTIVE: '#1166BB',
-    NORMAL: '#999',
-    SELECTED: '#444',
+  marker: {
+    colors: {
+      active: '#1166BB',
+      normal: '#999',
+      selected: '#444',
+    },
+    markerHeight: 8,
+    markerWidth: 8,
   },
   // 圆环颜色
   NodeColor: ['#1BCA69', '#FF3A3A', '#FAB418'],

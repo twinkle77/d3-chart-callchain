@@ -2,8 +2,28 @@ import * as d3 from 'd3'
 import { query, prefix } from '@/util/element'
 import CONFIG from '@/config'
 import { drawSymbol } from '@/draw'
+import transformData from './transform'
+import data from './data'
 
 export default class Callchain {
+  container = null
+
+  svg = null
+
+  zoomSpace = null
+
+  graph = null
+
+  areasWrapper = null
+
+  edgesWrapper = null
+
+  nodesWrapper = null
+
+  defs = null
+
+  // data = null
+
   constructor (el = 'callchain') {
     this.container = query(el)
     this.setup()
@@ -27,10 +47,21 @@ export default class Callchain {
   }
 
   createSymbol () {
-    const defs = this.graph.append('svg:defs')
-    Object.keys(CONFIG.markerColors).forEach((key) => {
-      drawSymbol(defs, key, CONFIG.markerColors[key])
+    this.defs = this.svg.append('defs')
+    const { colors, markerHeight, markerWidth } = CONFIG.marker
+    Object.keys(colors).forEach((key) => {
+      drawSymbol(this.defs, key.toUpperCase(), {
+        markerHeight,
+        markerWidth,
+        color: colors[key],
+      })
     })
+
+    this.processData(data)
+  }
+
+  processData (d) {
+    this.data = typeof CONFIG.transform === 'function' ? CONFIG.transform(d) : transformData(d)
   }
 
   setOptions () {
