@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 export const CLIENT = 'CLIENT'
 export const SERVER = 'SERVER'
 let CLIENT_ID = -1
@@ -16,7 +14,6 @@ class Node {
   setEdges (edge) {
     this.edges.push(edge)
   }
-
 }
 
 class Edge {
@@ -51,7 +48,7 @@ export default function transformData (data) {
   const map = new Map()
 
   data.forEach((item) => {
-    let {
+    const {
       root,
       referenceId: id,
       parentIds,
@@ -59,7 +56,7 @@ export default function transformData (data) {
       averageTime,
       errorPercent,
       startTime,
-      endTime,
+      endTime
     } = item
 
     const meta = {
@@ -71,7 +68,7 @@ export default function transformData (data) {
     }
 
     if (root) {
-      let clientId =  CLIENT_ID--
+      const clientId = CLIENT_ID--
       // 伪造client节点
       newData.push(new Node(CLIENT, clientId, 'client', { parentIds: [] }))
       meta.parentIds.push(clientId)

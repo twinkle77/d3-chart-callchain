@@ -18,7 +18,6 @@ export function query (el) {
   return el
 }
 
-
 const PREFIX = 'call-chain'
 export function prefix (name) {
   return `${PREFIX}-${name}`

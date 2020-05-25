@@ -6,10 +6,10 @@ export default {
     colors: {
       active: '#1166BB',
       normal: '#999',
-      selected: '#444',
+      selected: '#444'
     },
     markerHeight: 8,
-    markerWidth: 8,
+    markerWidth: 8
   },
   // 圆环颜色
   NodeColor: ['#1BCA69', '#FF3A3A', '#FAB418'],
@@ -35,5 +35,5 @@ export default {
   // },
   PanelConfig: null,
   // 以xxx字段作为节点的索引id
-  Id: 'referenceId',
+  Id: 'referenceId'
 }

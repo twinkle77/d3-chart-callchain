@@ -22,7 +22,7 @@ export default class Callchain {
 
   defs = null
 
-  // data = null
+  data = null
 
   constructor (el = 'callchain') {
     this.container = query(el)
@@ -53,15 +53,16 @@ export default class Callchain {
       drawSymbol(this.defs, key.toUpperCase(), {
         markerHeight,
         markerWidth,
-        color: colors[key],
+        color: colors[key]
       })
     })
 
     this.processData(data)
   }
 
-  processData (d) {
-    this.data = typeof CONFIG.transform === 'function' ? CONFIG.transform(d) : transformData(d)
+  processData (data) {
+    this.data = typeof CONFIG.transform === 'function' ? CONFIG.transform(data) : transformData(data)
+    console.log(this.data)
   }
 
   setOptions () {

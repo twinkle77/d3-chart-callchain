@@ -5,6 +5,7 @@
   "main": "dist/d3-chart-callchain-cjs.min.js",
   "module": "dist/d3-chart-callchain.js",
   "scripts": {
+    "lint": "eslint . --fix --ext .js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "serve": "live-server --watch=./dist",
     "dev": "cross-env NODE_ENV=development rollup --config --watch",
@@ -36,12 +37,16 @@
     "@babel/preset-env": "^7.7.7",
     "@rollup/plugin-alias": "^2.2.0",
     "@rollup/plugin-babel": "^5.0.2",
+    "@rollup/plugin-commonjs": "^12.0.0",
     "@rollup/plugin-replace": "^2.2.1",
     "babel-eslint": "^10.1.0",
     "cross-env": "^6.0.3",
     "eslint": "^6.6.0",
-    "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.18.2",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
     "live-server": "^1.2.1",
     "rollup": "^2.10.9",
     "rollup-plugin-eslint": "^7.0.0",
@@ -51,8 +56,6 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.7.0",
-    "@juggle/resize-observer": "^3.1.1",
-    "@rollup/plugin-commonjs": "^12.0.0",
     "d3": "^5.16.0",
     "d3-array": "^2.4.0",
     "d3-axis": "^1.0.12",
@@ -61,8 +64,6 @@
     "d3-hierarchy": "^1.1.9",
     "d3-scale": "^3.2.1",
     "d3-scale-chromatic": "^1.5.0",
-    "d3-selection": "^1.4.1",
-    "document-offset": "^1.0.4",
-    "extend": "^3.0.2"
+    "d3-selection": "^1.4.1"
   }
 }
