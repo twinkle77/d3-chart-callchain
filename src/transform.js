@@ -9,6 +9,7 @@ class Node {
     this.name = name
     this.meta = meta
     this.edges = []
+    this.scaleReq = [0.6, 0.4]
   }
 
   setEdges (edge) {
@@ -29,7 +30,6 @@ class Edge {
  */
 export default function transformData (data) {
   const newData = []
-  const map = new Map()
 
   data.forEach((item) => {
     const {
@@ -60,8 +60,6 @@ export default function transformData (data) {
 
     const newNode = new Node(SERVER, id, name, meta)
 
-    map.set(id, newNode)
-
     newData.push(newNode)
   })
 
@@ -72,8 +70,6 @@ export default function transformData (data) {
       node.setEdges(new Edge(pId, id))
     })
   })
-
-  map.clear()
 
   return newData
 }

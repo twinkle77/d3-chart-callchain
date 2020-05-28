@@ -1,7 +1,5 @@
 export default {
   transform: null, // 数据预处理
-  Margin: 20,
-  Colors: [],
   marker: {
     colors: {
       active: '#1166BB',
@@ -12,10 +10,15 @@ export default {
     markerWidth: 8
   },
   node: {
-    color: ['#1BCA69', '#FF3A3A', '#FAB418'], // 圆环颜色
+    colors: ['#1BCA69', '#FF3A3A', '#FAB418'], // 圆环颜色
     radius: 60, // 节点半径
-    width: 13 // 圆环宽度
+    ringWidth: 13, // 圆环宽度
+    internalTopText ({ meta }) { return meta.averageTime },
+    internalBottomText ({ meta }) { return meta.averageTime },
+    externalText (node) { return node.name }
   },
+  Margin: 20,
+  Colors: [],
   Client: 'client',
   CollideRadius: 135,
   // 边颜色

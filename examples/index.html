@@ -10,10 +10,17 @@
 
 <body>
   <script src="/dist/d3-chart-callchain.js" type="module"></script>
+  <script src="./data.js" type="module"></script>
   <script type="module">
     import Callchain from '/dist/d3-chart-callchain.js'
+    import data from './data.js'
+    console.log('data', data)
     const instance = new Callchain()
-    instance.render()
+    instance.render(data)
+
+    setInterval(() => {
+      instance.setOptions(JSON.parse(JSON.stringify(data.slice(0, Math.floor(Math.random() * data.length - 1)))))
+    }, 3000)
   </script>
 </body>
 

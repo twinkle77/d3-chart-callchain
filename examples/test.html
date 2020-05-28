@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- <span id="span">spantext</span> -->
+    <div id="Ford"><span>1</span></div>
+    <div id="Jarrah"><span>1</span></div>
+    <div id="Kwon"><span>1</span></div>
+    <div id="Locke"><span>1</span></div>
+    <div id="Reyes"><span>1</span></div>
+    <div id="Shephard"><span>1</span></div>
+    <script crossorigin="anonymous" integrity="sha384-SeEcBbv+GyPjr8UihS7pgA83667/Lx1FApjG3PE3PNYv7voe2/UjDTCrewTPGf0g" src="https://lib.baomitu.com/d3/5.15.0/d3.js"></script>
+    <script>
+        d3.select('text').data('x123213').enter().append('text').text(d => d)
+
+        // const data = 
+        //     {name: "Locke", number: 4},
+        //     {name: "Reyes", number: 8},
+        //     {name: "Ford", number: 15},
+        //     {name: "Jarrah", number: 16},
+        //     {name: "Shephard", number: 23},
+        //     {name: "Kwon", number: 42}
+        // ];
+
+        // const selection = d3.selectAll("p")
+        //     .data(data)
+        //     .join(
+        //         enter => { console.log(enter); return enter.append("p").attr("style", "color: green").text(n => n.name) },
+        //         update => { console.log(update); return update.attr("style", "color: blue")},
+        //         exit => exit.remove()
+        //     )
+  
+        // setTimeout(() => {
+        //     let newData =  [
+        //         {name: "Locke", number: 5554},
+        //         {name: "Reyes", number: 5558},
+        //         {name: "Ford", number: 55515},
+        //         {name: "Jarrah", number: 16},
+        //         {name: "Shephard", number: 23},
+        //         {name: "Kwon", number: 42},
+        //         {name: "Shephard2", number: 23},
+        //         {name: "Kwon2", number: 42}
+        //     ]
+
+        //     const selection = d3.selectAll("p")
+        //         .data(newData)
+        //         .join(
+        //             enter => { console.log('enter', enter); return enter.append("p") },
+        //             update => { console.log('update', update); return update.attr("style", "color: blue")},
+        //             exit => exit.remove()
+        //         )
+        //         .text(n => n.name + '1')
+        //         // .attr("style", "color: green")
+        // }, 2000)
+    </script>
+</body>
+</html>
