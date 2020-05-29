@@ -8,26 +8,21 @@ import transformData, { SERVER, CLIENT } from './transform'
 
 export default class Callchain {
   container = null
-
+  graph = null
+  areasWrapper = null
+  edgesWrapper = null
+  nodesWrapper = null
+  defs = null
   svg = null
 
   zoomSpace = null
-
-  graph = null
-
-  areasWrapper = null
-
-  edgesWrapper = null
-
-  nodesWrapper = null
-
-  defs = null
 
   nodes = null
 
   simulation = null
 
   nodeElements = null
+  edgeElements = null
 
   constructor (el = 'callchain') {
     this.container = query(el)
@@ -66,13 +61,19 @@ export default class Callchain {
 
   processData (data) {
     this.nodes = typeof CONFIG.transform === 'function' ? CONFIG.transform(data) : transformData(data)
+    this.edgeElements = this.nodes.reduce((pre, cur) => [...pre, ...cur.edges], [])
   }
 
   setupForce () {
     this.simulation = d3.forceSimulation()
       .force('charge', d3.forceManyBody())
+      .nodes(this.nodes)
+      .force('link',
+        d3.forceLink()
+          .id(node => node.id)
+          .links(this.edgeElements)
+      )
 
-    this.simulation.nodes(this.nodes)
     this.simulation
       .on('tick', () => {
         this.nodeElements
@@ -84,7 +85,11 @@ export default class Callchain {
   }
 
   uninstallForce () {
-    this.simulation.force('X', null)
+    this.simulation
+      .force('X', null)
+      .force('link', null)
+      .on('tick', null)
+      .on('end', null)
   }
 
   initNode () {
@@ -164,10 +169,16 @@ export default class Callchain {
       })
   }
 
+  initEdge () {
+    console.log(this.edgeElements)
+  }
+
   setOptions (data) {
     this.processData(data)
 
     this.initNode()
+
+    this.initEdge()
 
     this.setupForce()
   }

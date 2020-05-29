@@ -18,9 +18,9 @@
     const instance = new Callchain()
     instance.render(data)
 
-    setInterval(() => {
-      instance.setOptions(JSON.parse(JSON.stringify(data.slice(0, Math.floor(Math.random() * data.length - 1)))))
-    }, 3000)
+    // setTimeout(() => {
+    //   instance.setOptions(JSON.parse(JSON.stringify(data.slice(0, Math.floor(Math.random() * data.length - 1)))))
+    // }, 3000)
   </script>
 </body>
 
