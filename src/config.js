@@ -17,6 +17,9 @@ export default {
     internalBottomText ({ meta }) { return meta.averageTime },
     externalText (node) { return node.name }
   },
+  edge: {
+    color: '#999'
+  },
   Margin: 20,
   Colors: [],
   Client: 'client',

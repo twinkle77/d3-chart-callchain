@@ -18,6 +18,7 @@ export default class Callchain {
   zoomSpace = null
 
   nodes = null
+  edges = null
 
   simulation = null
 
@@ -61,18 +62,58 @@ export default class Callchain {
 
   processData (data) {
     this.nodes = typeof CONFIG.transform === 'function' ? CONFIG.transform(data) : transformData(data)
-    this.edgeElements = this.nodes.reduce((pre, cur) => [...pre, ...cur.edges], [])
+    this.edges = this.nodes.reduce((pre, cur) => [...pre, ...cur.edges], [])
   }
 
   setupForce () {
+    const { node: { radius } } = CONFIG
+    // 图的居中位置计算
+    const graph = {
+      centerX: 1200 / 2,
+      centerY: 1200 / 2
+    }
+
+    const xCoordinateScale = d3 // https://www.d3indepth.com/scales/
+      .scalePow()
+      .domain([6, 100, 1e6])
+      .range([1e3, 2e3, 5e3])
+      .clamp(true)
+    const graphSize = this.nodes.length * this.edges.length
+    // 每个节点之间的距离
+
+    // eslint-disable-next-line no-unused-vars
+    const desiredXPositionForLeafNodes = xCoordinateScale(graphSize)
+
+    // 如果需要个性化调整布局，应该在 forces 中注册而不是在每次 tick 时修改节点位置
     this.simulation = d3.forceSimulation()
-      .force('charge', d3.forceManyBody())
       .nodes(this.nodes)
-      .force('link',
+      .force('link', // link(弹簧)力模型
         d3.forceLink()
           .id(node => node.id)
-          .links(this.edgeElements)
+          .links(this.edges)
+          .distance(radius + 20) // 设置两点之间距离
       )
+      .force('x', // forceX and forceY cause elements to be attracted towards specified position(s)
+        d3.forceX()
+          .x(({ type }) => {
+            return type === CLIENT ? 0 : graph.centerX
+          })
+      )
+      .force('y',
+        d3.forceY()
+          .y(graph.centerY)
+      )
+      .force(
+        'collide', // 碰撞力模型，防止节点重叠
+        d3
+          .forceCollide()
+          .strength(0.7)
+          .radius(radius + 20)
+          .iterations(1)
+      )
+      .alpha(1)
+
+    const { edge } = CONFIG
 
     this.simulation
       .on('tick', () => {
@@ -80,8 +121,16 @@ export default class Callchain {
           .attr('transform', node => {
             return `translate(${node.x}, ${node.y})`
           })
+
+        this.edgeElements
+          .attr('d', function ({ source, target }) {
+            return `M ${source.x} ${source.y} L ${target.x} ${target.y}`
+          })
+          .attr('stroke', edge.color)
       })
-      .on('end', function end (...args) { })
+      .on('end', function end (...args) {
+        console.log('force end')
+      })
   }
 
   uninstallForce () {
@@ -107,12 +156,14 @@ export default class Callchain {
       .enter()
       .append('g')
       .attr('id', node => node.id)
-      .each(function multipe ({ type }) {
+      .each(function multipe (node) {
+        const { type } = node
         const target = d3.select(this)
         if (type === SERVER) {
           that.processServerNode(target)
         } else if (type === CLIENT) {
           that.processClientNode(target)
+          node.fx = 0 // To fix a node in a given position
         }
       })
   }
@@ -170,7 +221,17 @@ export default class Callchain {
   }
 
   initEdge () {
-    console.log(this.edgeElements)
+    this.edgesWrapper
+      .selectAll('.edge')
+      .remove()
+
+    this.edgeElements = this.edgesWrapper
+      .selectAll('.edge')
+      .data(this.edges)
+      .enter()
+      .append('path')
+      .attr('class', 'edge')
+      .attr('marker-end', 'url(#NORMAL)') // 应用箭头
   }
 
   setOptions (data) {
