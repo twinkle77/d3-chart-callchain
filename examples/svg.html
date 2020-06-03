@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        svg {
+            border: 1px solid red;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+    <body>
+        <svg width="500px" height="500px" xmlns="http://www.w3.org/2000/svg" id="svgElm">
+            <g id="square">
+                <rect id="rectElm" x="10" y="10" width="20" height="20"
+                style="fill: none; stroke: black;"/>
+            </g>
+            <use xlink:href="#square" transform="scale(2)"/>
+        </svg>
+        <script>
+            const svgElm = document.getElementById('svgElm')
+            const rect = document.getElementById('rectElm')
+            // 平移
+            rect.addEventListener('')
+        </script>
+    </body>
+</html>

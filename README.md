@@ -7,6 +7,25 @@
 
 ![image](https://github.com/twinkle77/d3-chart-callchain/blob/master/examples/demo.gif)
 
+## Usage
+
+```javascript
+import Callchain from 'd3-chart-callchain'
+const instance = new Callchain(document.body, {
+  ...options,
+  data: []
+})
+
+// render
+instance.render()
+
+// destory
+instance.destory()
+
+// update
+instance.setOptions(newData)
+```
+
 ## Author
 
 👤 **twinkle77**

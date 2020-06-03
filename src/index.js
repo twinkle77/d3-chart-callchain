@@ -5,6 +5,7 @@ import { ellipsis } from '@/util/text.js'
 import CONFIG from '@/config'
 import { EdgeUtil, ServerNodeUtil, ClientNodeUtil } from '@/draw'
 import transformData, { SERVER, CLIENT } from './transform'
+import Zoom from './zoom.js'
 
 export default class Callchain {
   container = null
@@ -25,6 +26,8 @@ export default class Callchain {
   nodeElements = null
   edgeElements = null
 
+  zoomInstance = null
+
   constructor (el = 'callchain') {
     this.container = query(el)
     this.setup()
@@ -36,7 +39,7 @@ export default class Callchain {
   }
 
   createElement () {
-    this.svg = d3.select(this.container).append('svg').attr('id', prefix('svg')).attr('width', '1200').attr('height', 1200)
+    this.svg = d3.select(this.container).append('svg').attr('id', prefix('svg')).attr('width', '1200').attr('height', 600)
     this.zoomSpace = this.svg.append('g').attr('class', prefix('zoom-space'))
     this.graph = this.zoomSpace.append('g').attr('class', prefix('graph-wrapper'))
     this.areasWrapper = this.graph.append('g').attr('class', 'areas')
@@ -128,8 +131,8 @@ export default class Callchain {
           })
           .attr('stroke', edge.color)
       })
-      .on('end', function end (...args) {
-        console.log('force end')
+      .on('end', () => {
+        this.setupZoom()
       })
   }
 
@@ -234,6 +237,10 @@ export default class Callchain {
       .attr('marker-end', 'url(#NORMAL)') // 应用箭头
   }
 
+  setupZoom () {
+    this.zoomInstance = new Zoom(this.svg)
+  }
+
   setOptions (data) {
     this.processData(data)
 
@@ -246,6 +253,9 @@ export default class Callchain {
 
   destory () {
     this.uninstallForce()
+
+    this.uninstallZoom.uninstallZoom()
+
     this.svg.remove()
   }
 

@@ -1,3 +1,5 @@
+import { selection } from 'd3'
+
 /**
  * dom元素查找
  * @param {string | Element} el
@@ -21,4 +23,13 @@ export function query (el) {
 const PREFIX = 'call-chain'
 export function prefix (name) {
   return `${PREFIX}-${name}`
+}
+
+export function getElementRect (el) {
+  return el.getBoundingClientRect()
+}
+
+// 以 SVGRect 对象的形式返回当前元素的位置 和边界。包含 x、y、width、height 属性，分 别代表坐标和能包含整个图形的最小矩形框。 边界不受笔画宽度、裁剪、蒙版、滤镜影响
+export function getSvgBox (el) {
+  return el.getBBox()
 }

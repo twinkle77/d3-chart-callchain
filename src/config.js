@@ -20,25 +20,12 @@ export default {
   edge: {
     color: '#999'
   },
-  Margin: 20,
-  Colors: [],
-  Client: 'client',
-  CollideRadius: 135,
-  // 边颜色
-  EdgeColor: '#999',
-  // area边宽度
-  AreaEdgeWidth: 8,
-  // 节点的最大缩放比例
-  MaxScaleK: 5,
-  // 每次点击移动的距离
-  MoveDistance: 100,
-  // 每次缩小放大的 增加比例
-  ZoomDistance: 0.1,
-  // 信息面板配置. 传null标识不显示
-  // PanelConfig: {
-  //   width: 300
-  // },
-  PanelConfig: null,
-  // 以xxx字段作为节点的索引id
-  Id: 'referenceId'
+  zoom: {
+    maxScale: 5, // 节点的最大缩放比例
+    zoomDistance: 0.1, // 每次缩小放大的 增加比例
+    moveDistance: 100 // 每次点击移动的距离
+  },
+  area: {
+    edgeWidth: 8
+  }
 }
